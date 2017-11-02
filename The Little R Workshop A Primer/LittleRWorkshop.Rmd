@@ -1,0 +1,900 @@
+---
+title: "The Little R Workshop: A Primer"
+author: "Phil Bowsher"
+date: "Thur, Nov 2nd, 2017"
+output: 
+  ioslides_presentation:
+    css: shiny-slides.css
+    logo: images/shiny-logo.png
+    self_contained: no
+    incremental: true
+runtime: shiny
+---
+
+<style type="text/css">
+
+slides > slide:before {
+  font-size: 12pt;
+  content: 'http://shiny.rstudio.com/';
+  position: absolute;
+  text-align: center;
+  bottom: 15px;
+  left: 50%;  
+  margin-left: -300px;
+  width: 600px;
+  line-height: 1.9;
+}
+
+div.img-col{
+  text-align: center;
+  font-size: 14pt;
+}
+
+a {
+  border-bottom: none !important;
+}
+
+.wrapper {
+  margin: 70px auto;
+  position: relative;
+  z-index: 90;
+}
+
+.ribbon-wrapper-green {
+  width: 145px;
+  height: 148px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+}
+
+.ribbon-green {
+  font: bold 15px Sans-Serif;
+  color: #333;
+  text-align: center;
+  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -25px;
+  top: 45px;
+  width: 220px;
+  background-color: #7ADCBF;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8AACDF), to(#658FBE)); 
+  background-image: -webkit-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:    -moz-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:     -ms-linear-gradient(top, #8AACDF, #658FBE); 
+  background-image:      -o-linear-gradient(top, #8AACDF, #658FBE); 
+  color: #6a6340;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+}
+
+.ribbon-green:before, .ribbon-green:after {
+  content: "";
+  border-top:   3px solid #00896e;   
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+}
+
+.ribbon-green:before {
+  left: 0;
+}
+.ribbon-green:after {
+  right: 0;
+}
+</style>
+
+# Overview
+
+## Part 1-6 You will learn
+
+- Getting Started Using R Software
+- Getting Your Data into R
+- Working with Your Data & Modifying, Combining R Data Sets, SQL
+- Sorting, Printing, and Summarizing Your Data & Enhancing Your Output with RMD
+- Writing Flexible Code with the RMD parameters, Functions & Packages
+- Visualizing Your Data with Shiny
+
+## We'll Cover Four Main Areas:
+<div class="columns-2">
+- R & RStudio Tools
+- R4DS
+- RMD
+- Shiny
+
+<div class="img-col">
+![](ShinyPic.png)
+   
+ </div>
+</div>
+
+## My Story & How I Got Here
+### About:
+ - CS Background
+ - IBM & B2S Life Sciences
+ - Book Note
+ 
+## Freedom to Build...
+
+- “This is your world...You’re the creator...Find freedom on this canvas...Believe, that you can do it, ‘Cuz you can do it. You can do it.” 
+― Bob Ross"
+
+## Where is the Little R Book?
+
+- [http://r4ds.had.co.nz/](http://r4ds.had.co.nz/)
+
+- [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+
+## Setup
+
+- R
+- Packages
+- IDE
+- Projects
+- Sessions
+- Git/Github
+- RSC
+- Shiny
+
+## IDE PICK A DATASET
+
+- Built-in datasets
+- data()
+- data(ToothGrowth)
+- ?ToothGrowth
+- ToothGrowth
+- View(ToothGrowth)
+- summary(ToothGrowth)
+- plot(ToothGrowth)
+
+## IDE LET’S EXPLORE...
+- getwd()
+- library(tidyverse)
+- let us explore the data set a bit
+- names(ToothGrowth) # names of the variables
+- dim(ToothGrowth) # dimension (number of rows and columns)
+- str(ToothGrowth) # structure of the data set
+- class(ToothGrowth)
+- head(ToothGrowth, n = 5)
+- tail(ToothGrowth, n = 5)
+- ToothGrowth%>% write_csv('ToothGrowth.csv')
+- ToothGrowth2 <-read_csv("ToothGrowth.csv")
+
+## DATATYPES
+- R has a wide variety of data types…
+- Vectors
+- Lists
+- Matrix
+- Factors
+- Data frame
+- Tibble
+
+## WHAT I LIKE ABOUT TIBBLES..
+
+<div class="columns-2">
+- The pet cat -no
+- Timmy and Tommy Tibble –no but my kids do…
+- An awesome data set format for R: yes
+
+ <div class="img-col">
+   ![](tibbles.jpg)
+   
+   <div>CC image courtesy <br /> of <a href="http://pbskids.org/arthur/friends/tibbles/photos.html">pbskids</a> arthur</div>
+ </div>
+</div>
+
+
+## Comparison
+
+- Data Step, Proc Step, Functions, ODS
+- Functions & Packages, R Markdown
+- ["The philosophy of dplyr reminds me a lot the way the SAS Data Step works, although they are syntactically different they are quite similar in terms of data manipulation." ](http://altons.github.io/rstats/2015/01/22/an-easy-way-of-installing-rpostgresql-on-mac/)
+- ["For managing the data there are a few really popular packages: dplyr and data.table" ](http://stats.stackexchange.com/questions/123274/from-sas-to-r-what-are-must-packages-for-reporting)
+- [tidyverse](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/)
+- [Over the last year I have changed my data processing and manipulation workflow in R dramatically. Thanks to some great new packages like dplyr, tidyr and magrittr (as well as the less-new ggplot2) I've been able to streamline code and speed up processing.](http://zevross.com/blog/2015/01/13/a-new-data-processing-workflow-for-r-dplyr-magrittr-tidyr-ggplot2/)
+
+## Key Information
+
+- Built-in loop
+- [R applies functions at the column-level](http://rconvert.com/Convert_SAS_To_R_Statistical_Data/wp-content/uploads/2012/06/SAS_to_R_Conversion.pdf)
+- Data Sets & Arrays
+- R - Tibbles, Data Frame, Vectors, Matrices, Lists, Arrays
+- Objects
+- R Memory Usage
+- Hard Drive
+
+## Getting Started
+
+- [Cran](https://cran.r-project.org/) & Base - Review/vetting process
+- Logs
+- Viewing Results
+ - Viewtable
+ - Explorer
+- Data Libraries
+- R Home Directory
+- Temp vs. Permanent Data Sets
+- Variables
+
+## R Getting Started
+
+- Data set is called a data frame
+- Text variables are called character vectors
+- Numerical variables are numeric vectors
+- Categorical variables are factors and their categories are called levels
+- These are all called objects and appear in the Environment tab
+- We can use the R function class() to see what we have!
+- Try this R Code: class(cars)
+
+## Viewing the Data as a Spreadsheet
+
+- https://rpubs.com/ysohn/compass01_spring_2017
+- Let's look at our data in more depth!
+- Let's use the function View()
+- Try this R Code: View(States)
+- We can also view a data set in the RConsole directly
+- R functions: print(), head(), tail(), str(),dim(), nrow(), rownames(), colnames() ncol()
+- We can also show them in the R console: ls()
+- How to remove a variable or data set: rm()
+
+## Review 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10, 1.11, 1.12, 1.13
+
+
+# Part 2 - Importing Data
+
+## Importing Data - tidyverse
+
+- Infile
+- feather - a fast, lightweight file format used by both R and Python
+- readr - reads tabular data
+- readxl - reads Microsoft Excel spreadsheets
+- [haven - reads SAS, SPSS, and Stata files](http://www.principlesofeconometrics.com/sas.htm)
+- DBI - a universal interface to database management systems (DBMS)
+- dplyr - contains an interface to common databases
+- [data.table - fread() for fast table reading](https://rpubs.com/ggData/datatable)
+- Exporting data
+
+## Preview - Importing Data
+<div class="columns-2">
+
+- Tabular
+- Hierarchical
+- Relational
+- Distributed
+ 
+  <div class="img-col">
+   ![htmlwidgets1](htmlwidgets1.png)
+   
+ </div>
+</div>
+
+## Data Sets
+
+- http://www.principlesofeconometrics.com/sas.htm
+
+- https://rpubs.com/williamsurles/290693
+
+## R for Data Science
+- [http://r4ds.had.co.nz/](http://r4ds.had.co.nz/)
+- [tidyverse](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/)
+- https://github.com/rstudio/RStartHere
+
+## Tabular
+- Demo
+
+## Import Dataset Menu
+
+## Hierarchical Data
+- tree-like structure
+- XML, JSON, HTML, etc.
+- Demo
+
+## Importing Relational Data
+- Relationships between data
+- tuples
+- Drivers
+
+## Distributed Sources
+- CSV goes to memory but... as data groww, intro Relational Model...
+- Big Data - doesn't fit into a single, few machines
+- 100, 1000s of nodes (computers)
+- Spark
+- HDFS
+- Or Sampling
+
+## 
+```{r}
+library(tibble)
+storms <-tribble(
+~storm, ~wind, ~pressure, ~date,
+"Alberto", 110, 1007, "2000-08-12",
+"Alex", 45, 1009, "1998-07-30",
+"Allison", 65, 1005, "1995-06-04",
+"Ana", 40, 1013, "1997-07-01",
+"Arlene", 50, 1010, "1999-06-13",
+"Arthur", 45, 1010, "1996-06-21"
+)
+```
+
+## 2.3, 2.4, 2.15, 2.19, 2.22
+
+# Part 3 - Working with Your Data & Modifying, Combining R Data Sets, SQL
+
+## Data Step/Management
+
+- [tidyverse](https://rpubs.com/bradleyboehmke/data_wrangling)
+- [dplyr](https://rpubs.com/justmarkham/dplyr-tutorial)
+- [data.tables](https://rpubs.com/carbonmetrics/datatable)
+- Dates - lubridate
+- Set Statement
+- Subsetting
+- https://rpubs.com/hgil01/Modern-R-for-SAS-Users
+
+## See Slides
+
+- https://rpubs.com/cogent_himanshu/Blog2
+
+- https://sw23993.wordpress.com/2017/07/10/useful-dplyr-functions-wexamples/
+
+## SQL
+
+- https://rviews.rstudio.com/2017/10/18/database-queries-with-r/
+
+- http://db.rstudio.com
+
+## 3.1, 3.2, 3.6, 3.7, 4.3, 6.1, 6.4, 6.7, 6.13, A.F
+
+# Part 4 - Sorting, Printing, and Summarizing Your Data & Enhancing Your Output with RMD
+
+## Procs
+
+- Proc Print, Means, Freq, Tabulate, Report
+- Packages
+- https://github.com/rstudio/RStartHere
+
+## ODS
+
+- [R Markdown](https://beta.rstudioconnect.com/content/1772/#43)
+- Sweave, knitr, LaTeX
+- SAS Output Window
+- HTML, RTF, PDF, Word Output
+- Graphics
+  - Proc SGPlot
+  - [GGPlot2](https://rpubs.com/hadley/ggplot2-toolbox)
+
+## Example R Markdown Doc -- `Example.RMD`
+
+- Create a new R Markdown document in the IDE by going to 'File' and select 'New File' and select 'R Markdown...' and create a new document and leave output as HTML
+<div class="columns-4">![Rmarkdown2](Rmarkdown2.png)</a> </div>
+
+- Then select Knit and save it as Example.RMD </td>
+<td><img src="Rmarkdown3.png" width="200" /></td>
+</tr>
+</table>
+  
+## 4.4, 5.1, 5.4, 5.5, 5.11
+
+## Hopefully Not in this room...
+
+<div class="columns-4">![mouse](mouse.png)</a>
+
+</div>
+
+# Part 5 - Writing Flexible Code with the RMD parameters, Functions & Packages 
+
+## Macros
+
+- Macro Variables
+ - Parameterized Reports - R Markdown
+- Macros
+ - [Funtions & Funcational Programming](https://rpubs.com/hadley/97970)
+ - [Functional Programming](http://www.rpubs.com/ryantillis/R_programming_P1)
+ - [Functional Programming](https://rpubs.com/mdancho84/adv-r_functional_programming)
+ - https://beta.rstudioconnect.com/content/3130/Conjunction_Junction_whats_your_function_in_R.html
+ 
+## 7.1, 7.2, 7.3, 7.4, 8, 9, 10, 10.15, A.A, A.B
+
+# Part 6 - Visualizing Your Data with Shiny
+
+## Shiny Motivation
+
+<div class="columns-2">
+ - Analysis must be communicated
+ - Data scientists are modern diviners
+ - We sit between the tools and users
+ - Deliver static reports
+ - Impoverished perspective into analysis
+
+ <div class="img-col">
+   ![](wizard.jpg)
+   
+   <div>Altered CC image courtesy <br /> of <a href="https://www.flickr.com/photos/mcgraths/">mcgraths</a> on flickr</div>
+ </div>
+</div>
+
+## Shiny
+### About:
+ - Interactive web application framework for R
+ - Create and share applications with others
+ - Expects no knowledge of web technologies like HTML, CSS, or JavaScript (but you can leverage them, if you know them)
+
+### Benefits & Features:
+ - Accessible to non-programmers
+ - Great for exploratory data analysis, visualizations & dashboards
+ - Utilize existing R code
+ 
+## Using Shiny - How to Build a shiny App & Installation & Structure
+ - A shiny app consists of two parts: a user interface (UI) and a server
+ - Install Package - Shiny - install.packages("shiny")
+ - Load Library - Shiny - library(shiny)
+ - ui.R - User Interface
+ - server.R  - Server Function
+ - File Template - runExample("01_hello")
+ - [Shiny Cheat Sheet](http://shiny.rstudio.com/articles/cheatsheet.html)
+- [Enhance with Shiny functions and R code](http://shiny.rstudio.com/reference/shiny/latest/)
+- [Enhance with Shiny Widgets](http://shiny.rstudio.com/gallery/widget-gallery.html)
+
+## Intro Process
+ - https://github.com/rstudio/shiny-examples/
+ - http://shiny.rstudio.com/gallery/single-file-shiny-app.html
+ - Panels
+ - ToothGrowth
+ - http://shiny.rstudio.com/gallery/basic-datatable.html
+ - http://shiny.rstudio.com/gallery/reactivity.html
+
+## Example shiny App &mdash; `ui.R`
+
+```r
+library(datasets)
+library(DT)
+
+fluidPage(
+  titlePanel("Basic DataTable for ToothGrowth"),
+  
+  # Create a new Row in the UI for selectInputs
+  fluidRow(
+    column(4,
+           selectInput("supp",
+                       "Supplement:",
+                       c("All",
+                         unique(as.character(ToothGrowth$supp))))
+    )
+    )
+  ,
+  # Create a new row for the table.
+  fluidRow(
+    DT::dataTableOutput("table")
+  )
+)
+```
+
+```{r, echo=FALSE, results="hide"}
+library(datasets)
+head(iris, n=2)
+```
+
+
+## Example shiny App &mdash; `server.R`
+
+```r
+library(datasets)
+
+function(input, output) {
+  
+  # Filter data based on selections
+  output$table <- DT::renderDataTable(DT::datatable({
+    data <- ToothGrowth
+    if (input$supp != "All") {
+      data <- data[data$supp == input$supp,]
+    }
+    data
+  }))
+  
+}
+```
+
+## Shiny Development Example - 1_Shiny_ToothGrowth_Basic
+
+- Go [here](http://shiny.rstudio.com/gallery/basic-datatable.html)
+- Create a new multi file shiny app in the IDE by going to 'File' and select 'New File' and select 'Shiny Web App...' and create a new multiple file app and title it 'clustering'
+- Copy over the ui.R and app.R files with the code found [here:](https://github.com/rstudio/shiny-examples/tree/master/030-basic-datatable)
+- Click 'Run App' in the IDE when done
+
+## Shiny Example - Interactive Plot ToothGrowth 2_Shiny_Basic_Plots
+```{r, echo=FALSE}
+library(ggplot2)
+library(Cairo)   # For nicer ggplot2 output when deployed on Linux
+library(datasets)
+
+dataset <- ToothGrowth
+
+ui <- fluidPage(
+  fluidRow(
+    
+    column(width = 6,
+           plotOutput("plot1", height = 350,
+                      click = "plot1_click",
+                      brush = brushOpts(
+                        id = "plot1_brush"
+                      )
+           ),
+           actionButton("exclude_toggle", "Toggle points"),
+           actionButton("exclude_reset", "Reset")
+    )
+  )
+)
+
+server <- function(input, output) {
+  # For storing which rows have been excluded
+  vals <- reactiveValues(
+    keeprows = rep(TRUE, nrow( dataset))
+  )
+  
+  output$plot1 <- renderPlot({
+    # Plot the kept and excluded points as two separate data sets
+    keep    <-  dataset[ vals$keeprows, , drop = FALSE]
+    exclude <-  dataset[!vals$keeprows, , drop = FALSE]
+    
+    ggplot(keep, aes(dose, len)) + geom_point() +
+      geom_smooth(method = lm, fullrange = TRUE, color = "black") +
+      geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
+      coord_cartesian(xlim = c(0.5, 2.0), ylim = c(5,35))
+  })
+  
+  # Toggle points that are clicked
+  observeEvent(input$plot1_click, {
+    res <- nearPoints( dataset, input$plot1_click, allRows = TRUE)
+    
+    vals$keeprows <- xor(vals$keeprows, res$selected_)
+  })
+  
+  # Toggle points that are brushed, when button is clicked
+  observeEvent(input$exclude_toggle, {
+    res <- brushedPoints( dataset, input$plot1_brush, allRows = TRUE)
+    
+    vals$keeprows <- xor(vals$keeprows, res$selected_)
+  })
+  
+  # Reset all points
+  observeEvent(input$exclude_reset, {
+    vals$keeprows <- rep(TRUE, nrow( dataset))
+  })
+  
+}
+
+shinyApp(ui, server)
+```
+
+## Shiny Development Example - 3_Shiny_ToothGrowth_Plots
+
+<div class="columns-2">
+- [Example 1](http://shiny.rstudio.com/gallery/plot-interaction-exclude.html)
+- [Example 2](http://shiny.rstudio.com/gallery/plot-plus-three-columns.html)
+
+
+
+</div>
+
+## You Need a Dashboard!
+
+<div class="columns-4">![dogbert](dogbert.png)</a>
+
+</div>
+
+# Part 2 - shinydashboard
+
+## Shiny Development Example - 4_Shiny_shinydashboard_basic
+
+<div class="columns-2">
+- [Pharmacometrics: some Shiny applications](http://webpopix.org/shiny/ShinyExamples.html)
+- [CDC PrEP Guidelines ](https://prism.shinyapps.io/cdc-prep-guidelines/)
+- [CDC Zika Data](https://chendaniely.shinyapps.io/zika_cdc_dashboard/)
+- [shinydashboard](https://rstudio.github.io/shinydashboard/)
+- 4_Shiny_shinydashboard_basic
+
+</div>
+
+## Shiny Development Example htmlTemplate
+
+<div class="columns-2">
+- Shiny html template
+- [HTML Templates](http://shiny.rstudio.com/articles/templates.html)
+- [Developing and deploying large scale Shiny applications ](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Developing-and-deploying-large-scale-Shiny-applications-for-non-life-insurance)
+- [Example](https://beta.rstudioconnect.com/content/2771/)
+
+</div>
+
+## shiny Package & Shiny Server
+
+<table width="100%" style="border-spacing: 50px; border-collapse: separate; margin: -50px auto;">
+<tr>
+<td style="vertical-align: top; padding-top: 1em">
+### shiny Package
+Shiny is an open source R package that provides a web framework for building interactive web applications using R.
+</td>
+<td><img src="shiny.png" width="200" /></td>
+</tr><tr>
+<td style="vertical-align: top; padding-top: 1em">
+### Shiny Server
+Shiny Server is a server program that lets you host and manage shiny web applications and interactive documents online.
+</td>
+<td><img src="pk3.png" width="200" /></td>
+</tr>
+</table>
+
+# Part 2.5 - Combining Shiny & R Markdown
+
+## Intro to RMD - flexdashboard - Publish Data Visualizations as a Dashboard
+
+<div class="columns-2">
+- [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard/)
+- [Gene Expression Biclustering - Bryan Lewis](https://jjallaire.shinyapps.io/shiny-biclust/)
+- [Iris K-Means Clustering](https://jjallaire.shinyapps.io/shiny-kmeans/)
+
+<div class="img-col">
+<a href="https://jjallaire.shinyapps.io/shiny-biclust/">![rmarkdown3](flex.png)</a>
+
+</div>
+
+## Interactive-Reporting-Dashboards-in-Shiny
+
+- [Interactive-Reporting-Dashboards-in-Shiny](https://github.com/philbowsher/Interactive-Reporting-Dashboards-in-Shiny)
+- [Interactive plots](http://shiny.rstudio.com/gallery/)
+- [1_Shiny_Basic_Plots](http://shiny.rstudio.com/gallery/plot-interaction-exclude.html)
+
+## flexdashboard Examples
+
+<div class="columns-2">
+- 2_RMD_Flex_RMD_To_Shiny_Intro
+- 3_RMD_Flex_ToothGrowth
+- 4_RMD_Flex_Shiny_ToothGrowth
+
+</div>
+
+## Shiny/R Markdown Examples
+
+<div class="columns-2">
+- [FDA Adverse (Drug) Event Dashboard](https://github.com/statwonk/openfda-dashboard)
+- [interAdapt - An Interactive Planner for Group Sequential, Adaptive Enrichment Designs](https://michaelrosenblum.shinyapps.io/interAdapt/)
+- [Export a report from Shiny - Simple Example](http://shiny.rstudio.com/gallery/download-knitr-reports.html)
+ - [AplusB: A + B design investigator for phase I dose-escalation studies](https://graham-wheeler.shinyapps.io/AplusB/)
+
+<div class="img-col">
+   ![rmarkdown](rmddownload.png)
+ </div>
+</div>
+
+</div>
+
+## R Markdown Document - Interactivity Using Shiny
+
+ - R Markdown - leveraging Shiny
+ - Using the Shiny `renderPlot` function to make a plot interactive
+ - `selectInput` & `sliderInput` functions create the input widgets
+ - You can also embed Shiny components directly within HTML presentations
+ - It is also possible to embed an entire shiny application within an R Markdown document using the `shinyAppDir` function
+
+## Example R Markdown Doc with Embed shiny App
+
+ - In IDE - go to 'File', then 'New File' and 'R Markdown'
+ - Then select 'Shiny' on the left and name the document
+ - Click Ok
+ - This is now an [interactive document](http://rmarkdown.rstudio.com/authoring_shiny.html)- an R Markdown file that contains Shiny components and can be an app or used within a report
+ 
+## R Markdown Websites
+
+ - [Site](http://rmarkdown.rstudio.com/rmarkdown_websites.html)
+ - 5_RMD_Immunogenicity_Website
+ - Use rmarkdown::render_site()
+ - [Example](https://beta.rstudioconnect.com/content/2770/)
+ 
+## Blogdown
+
+ - Create websites using R Markdown and Hugo
+ - [Site](https://bookdown.org/yihui/blogdown/installation.html)
+ - 5_RMD_Blogdown
+ - install blogdown
+ - blogdown::install_hugo()
+ - blogdown::new_site()
+ - blogdown::serve_site()
+ - RStudio Connect Tip
+- [Example](https://beta.rstudioconnect.com/content/2972/)
+ 
+## Bookdown
+
+ - https://bookdown.org/yihui/bookdown
+ - 6_RMD_Immunogenicity_Bookdown
+ - In Build - click Build Book
+ - https://beta.rstudioconnect.com/content/2899/
+
+# HTML Widgets
+
+## Live HTML Widgets Examples
+
+<div class="columns-2">
+- [Institute for Quantitative Social Science - statistical analysis of genomic data for antibiotic resistant strains of mycobacterium tuberculosis by Amanda Winburn and others](https://hmdc.shinyapps.io/genTB/)
+- [Best & Worst California Hospitals for Surgery by Gary Chung
+](https://gchung.shinyapps.io/CAhospitals/)
+- [canvasXpress - developed as the core visualization component for bioinformatics and systems biology analysis at Bristol-Myers Squibb by Isaac Neuhaus
+](http://canvasxpress.org/)
+- [Visualizing U.S. Clinical Trials
+](https://gchung.shinyapps.io/CTgov/)
+
+<div class="img-col">![rmarkdown](htmlwidgets4.png)
+ </div>
+
+</div>
+
+## HTML Widgets R Bindings to JavaScript Libraries
+
+<div class="columns-2">
+
+- Used at the R console for data analysis just like conventional R plots (via RStudio Viewer).
+- Seamlessly embedded within R Markdown documents and Shiny web applications.
+- Saved as standalone web pages for ad-hoc sharing via email, Dropbox, etc.
+
+<div class="img-col"><a href="http://www.htmlwidgets.org/showcase_leaflet.html">![htmlwidgets1](htmlwidgets1.png)</a>
+ </div>
+ 
+</div>
+
+## HTML Widgets &mdash; Leaflet Example - 1_htmlwidgets_Leaflet_Starbucks
+
+<div class="columns-2">
+<a href="http://www.htmlwidgets.org/index.html">![htmlwidgets2](htmlwidgets2.png)</a>
+
+- Leaflet Example 
+- Viewing Starbucks Locations Near the pharmaSUG Baltimore Conference
+- Loads a Data Set
+
+</div>
+
+## HTML Widgets &mdash; Leaflet Example - 2_htmlwidgets_Shiny_Leaflet_Starbucks
+
+<div class="columns-2">
+<a href="http://www.htmlwidgets.org/index.html">![htmlwidgets2](htmlwidgets2.png)</a>
+
+- How would you add Shiny to it?
+- Find Starbuck locations for your hometown...
+
+</div>
+
+## What Shiny functions are being used below?
+```{r, echo=FALSE}
+library(d3scatter)
+library(crosstalk)
+
+shared_ToothGrowth <- SharedData$new(ToothGrowth)
+bscols(widths = c(3,NA,NA),
+  list(
+    filter_checkbox("supp", "supp", shared_ToothGrowth, ~supp, inline = TRUE),
+    filter_slider("dose", "dose", shared_ToothGrowth, ~dose, width = "100%")
+  ),
+  d3scatter(shared_ToothGrowth, ~dose, ~len, ~factor(supp), width="100%", height=250),
+  d3scatter(shared_ToothGrowth, ~len, ~dose, ~factor(supp), width="100%", height=250)
+)
+```
+
+## None - It's Crosstalk
+
+<div class="columns-2">
+- http://rstudio.github.io/crosstalk/index.html
+- Crosstalk is an add-on to the htmlwidgets package
+- It extends htmlwidgets with a set of classes, functions, and conventions for implementing cross-widget interactions (currently, linked brushing and filtering)
+- Crosstalk doesn’t require the use of Shiny
+- On the other hand, you can use Crosstalk and Shiny together to broaden the capabilities of each
+
+
+</div>
+
+## Crosstalk Examples
+
+<div class="columns-2">
+- 1_htmlwidgets_crosstalk_ToothGrowth
+- 2_htmlwidgets_crosstalk_Shiny_ToothGrowth
+
+</div>
+
+## Common Reporting Tasks - rpivotTable & DT
+
+<div class="columns-2">
+- [rpivotTable - Package created by Enzo Martoglio](https://github.com/smartinsightsfromdata/rpivotTable)
+- [DT: An R interface to the DataTables library by RStudio](https://rstudio.github.io/DT/)
+
+<div class="img-col"><a href="http://hafen.github.io/htmlwidgetsgallery/"></a>
+   ![rpivottable](rpivottable.png)
+ </div>
+</div>
+
+</div>
+
+# Appendix
+## API - Info
+
+<div class="columns-2">
+- APIs can solve issues when programmers use different programming languages
+- API(Application Program Interface) is a generic term and can really mean any interface an IT service promises to other services
+- RESTful APIs are HTTP APIs, the HTTP looks for two things: method and URL
+- Web page made a request to a web server with the GET method and the URL, web server knows how to interpret your HTTP request
+- Query some functions written in R from a Java or Python application, develop a client for your API in JavaScript and users can interact with your R functions from browser.
+
+</div>
+
+## Plumber - Info
+
+<div class="columns-2">
+
+- Plumber, converts your existing R code to a web API using a handful of special one-line comments.
+- Plumber allows you to create a REST API by merely decorating your existing R source code with special comments
+- Comments allow plumber to make your R functions available as API endpoints
+- When you plumb() a file, Plumber calls source() on that file which will evaluate any top-level code that you have defined
+- You can visit a URL using a browser or a terminal to run your R function and get results
+
+</div>
+
+## Plumber - Info/Demo
+
+<div class="columns-2">
+
+- Server Demo
+- https://beta.rstudioconnect.com/content/2975/__swagger__/
+- https://beta.rstudioconnect.com/content/2975/outcomes?drug=FUROSEMIDE
+- Endpoints are the terminal step in the process of serving a request. An endpoint can simply be viewed as the logic that is ultimately responsible for generating a response to a particular request. 
+- https://www.rplumber.io/
+- https://www.mango-solutions.com/blog/production-r-at-ons
+- https://blog.rstudio.com/2017/08/03/rstudio-connect-v1-5-4-plumber/
+</div>
+
+## Report Generation & Automation
+
+ - [Shiny package](http://shiny.rstudio.com/) & [Shiny Server](https://www.rstudio.com/products/shiny/download-server/)
+ - [R Markdown](http://rmarkdown.rstudio.com/)
+ - [Sweave and knitr...](https://support.rstudio.com/hc/en-us/articles/200552056-Using-Sweave-and-knitr) [knitr is an engine for dynamic report generation with R. It enables integration of R code into LaTeX, LyX, HTML, Markdown, AsciiDoc, & reStructuredText documents. ](https://cran.r-project.org/web/packages/knitr/index.html)
+  - [LaTex Directions to use Sweave and knitr to create PDF reports.](http://www.latex-project.org/get/)
+  - [The RTF package, a set of R functions to output Rich Text Format RTF files with high resolution tables & graphics.](https://cran.r-project.org/web/packages/rtf/rtf.pdf)
+ - [ReporteRs by David Gohel: Microsoft Word, Microsoft PowerPoint & HTML Documents Generation from R](https://cran.r-project.org/web/packages/ReporteRs/index.html)[formerly R2DOCX package](http://davidgohel.github.io/R2DOCX/index.html)
+
+## Report Generation & Automation Cont.
+
+ - [CRAN Task View: Reproducible Research](https://cran.r-project.org/web/views/ReproducibleResearch.html)
+ - [xtable: Export Tables to LaTeX or HTML](https://cran.r-project.org/web/packages/xtable/index.html)
+ - [DT: An R interface to the DataTables library](http://rstudio.github.io/DT/)
+  - [R Markdown Document Templates - re-usable document templates](http://rmarkdown.rstudio.com/developer_document_templates.html)
+  
+## Interesting
+
+- http://blog.revolutionanalytics.com/2017/06/r-fda.html
+- https://mran.microsoft.com/package/SASxport/
+- https://www.pharmasug.org/proceedings/2017/PO/PharmaSUG-2017-PO22.pdf
+- https://www.pharmasug.org/proceedings/2017/SP/PharmaSUG-2017-SP04.pdf
+- https://www.pharmasug.org/proceedings/2016/QT/PharmaSUG-2016-QT14.pdf
+- http://www.rpubs.com/rslbliss/r_packages_ws
+
+## Q/A...
+
+<div class="columns-4">![yoda4](yoda4.png)</a>
+
+</div>
+
+## Additional Resources
+
+ - Shiny Developer Center - http://shiny.rstudio.com
+ - [Stack Overflow - "shiny" tag](http://stackoverflow.com/questions/tagged/shiny)
+ - ["Shiny Discuss" Mailing List](https://groups.google.com/d/forum/shiny-discuss)
+ - ***Come meet us!***
+ 
+## Come see us at the RStudio Conference...
+
+- https://www.rstudio.com/conference/
+- San Diego January 31 to Feb 3
+
+<div class="columns-4">![jerry](jerry.png)</a>
+
+</div>

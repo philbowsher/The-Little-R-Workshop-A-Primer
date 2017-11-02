@@ -4,11 +4,11 @@ output: html_notebook
 ---
 
 ```{r setup, include=FALSE}
+library(DBI)
 con <- dbConnect(odbc::odbc(), "SQL Server (DSN)")
 ```
 
 ```{r}
-library(DBI)
 dbGetQuery(con, "Select top 10 * from flights")
 ```
 

@@ -9,7 +9,8 @@ editor_options:
 # Connecting
 
 ```{r}
-con <- DBI::dbConnect(odbc::odbc(), "SQL Server")
+library(DBI)
+con <- DBI::dbConnect(odbc::odbc(), "SQL Server (DSN)")
 ```
 
 # Using

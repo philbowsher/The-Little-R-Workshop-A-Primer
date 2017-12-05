@@ -1,6 +1,6 @@
 library(rbokeh)
 suppressMessages(library(dplyr))
-bike <- read.csv("/home/phil/Foundation-of-the-R-Workflow-workshop-2017-10-08/data/Bike_Share_Stations.csv")
+bike <- read.csv("~/The-Little-R-Workshop-A-Primer/Examples/data/Bike_Share_Stations.csv")
 bike_small <- bike %>% select(LATITUDE, LONGITUDE, NUMBER_OF_DOCKS)
 bike_small %>% head
 

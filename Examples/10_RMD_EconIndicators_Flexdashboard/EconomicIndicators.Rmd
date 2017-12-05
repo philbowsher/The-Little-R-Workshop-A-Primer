@@ -14,10 +14,10 @@ library(readxl)
 library(ggplot2)
 
 #Read US GDP Data Set from FED Excel File
-dtGDP <- read_excel('~/Foundation-of-the-R-Workflow-workshop-2017-10-08/10_RMD_EconIndicators_Flexdashboard/fredgraph.xls',sheet = 'GDP')
+dtGDP <- read_excel('~/The-Little-R-Workshop-A-Primer/Examples/10_RMD_EconIndicators_Flexdashboard/fredgraph.xls',sheet = 'GDP')
 
 #Read US Unemployment Rate and ISM PCI Index Data Set from FED Excel File 
-dtOtherIndicators <- read_excel('~/Foundation-of-the-R-Workflow-workshop-2017-10-08/10_RMD_EconIndicators_Flexdashboard/fredgraph.xls',sheet = 'Sheet2')
+dtOtherIndicators <- read_excel('~/The-Little-R-Workshop-A-Primer/Examples/10_RMD_EconIndicators_Flexdashboard/fredgraph.xls',sheet = 'Sheet2')
 
 
 ```

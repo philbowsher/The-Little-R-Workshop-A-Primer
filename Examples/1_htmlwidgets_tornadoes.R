@@ -12,15 +12,17 @@
 #Torn1 <- as_tibble(Torn)
 #Torn1 %>% write_csv('Torn.csv')
 
-Torn <- read_csv("/home/phil/Foundation-of-the-R-Workflow-workshop-2017-10-08/data/torn/Torn.csv")
+library(tidyverse)
 
-Torn1 <- Torn[ which((Torn$st=='IL' | Torn$st=='IA') & Torn$yr== 2016), ]
+Torn <- read_csv("~/The-Little-R-Workshop-A-Primer/Examples/data/torn/Torn.csv")
+
+Torn1 <- Torn[ which((Torn$st=='MO' | Torn$st=='KS') & Torn$yr== 2016), ]
 
 View(Torn1)
 
 library("leaflet") 
 
-leaflet() %>% addTiles() %>% setView(-90.424373, 41.476831, zoom = 9) %>% 
+leaflet() %>% addTiles() %>% setView(-94.582399, 39.098217, zoom = 9) %>% 
   
   addMarkers(data = Torn1, lat = ~ slat, lng = ~ slon, popup = Torn1$date)
 

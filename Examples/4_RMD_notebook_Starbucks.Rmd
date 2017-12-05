@@ -21,11 +21,13 @@ download.file("https://opendata.socrata.com/api/views/ddym-zvjk/rows.csv?accessT
 # readr
 starbucks <- read_csv("data.csv")
 
+# is this needed? as_tibble(starbucks)
+
 # rename(starbucks, `StoreNumber` =  `Store Number` )
 
 #Make State a factor for later on
-starbucks$State.f <- factor(starbucks$State)
-is.factor(starbucks$State.f)
+#starbucks$State.f <- factor(starbucks$State)
+#is.factor(starbucks$State.f)
 
 class(starbucks)
 
@@ -36,7 +38,7 @@ starbucks
 
 ```
 
-Let's now subset it for IL & IA
+Let's now subset it for PA
 ```{r}
 
 # Base R
@@ -44,20 +46,19 @@ Let's now subset it for IL & IA
 
 # Dplyr
 # Without pipes
-# starbucks_PA <- filter(starbucks, Country== 'US', State=='VA')
+# starbucks_MO <- filter(starbucks, Country== 'US', State=='VA')
 
-starbucks_IL_IA <- starbucks %>%
-  filter(Country== 'US', State=='IL' | State=='IA')%>% 
+starbucks_MO <- starbucks %>%
+  filter(Country== 'US', State=='KS' | State=='MO')%>% 
   select(Brand, `Store Number`, `Ownership Type`, City,	State,	Zip, Country, Coordinates,	Latitude,	Longitude, Name)
 
 ```
 
 ```{r}
-
-leaflet() %>% addTiles() %>% setView(-90.424373, 41.476831, zoom = 12) %>% 
+leaflet() %>% addTiles() %>% setView(-94.582461, 39.097719, zoom = 12) %>% 
               
-addMarkers(data = starbucks_IL_IA, lat = ~ Latitude, lng = ~ Longitude, popup = starbucks_IL_IA$Name) %>%
-  addPopups(-90.424373, 41.476831, 'the <b> spot</b>')
+addMarkers(data = starbucks_MO, lat = ~ Latitude, lng = ~ Longitude, popup = starbucks_MO$Name) %>%
+  addPopups(-94.582461, 39.097719, 'the <b> spot</b>')
 
 ```
 
@@ -77,7 +78,7 @@ class(starbucks_R_C_P)
 ```
 Excel
 ```{r}
-starbucks_IL_IA_R_C_P <- starbucks_IL_IA %>%
+starbucks_MO_R_C_P <- starbucks_MO %>%
   left_join(starbucks_R_C_P, by = 'Store Number')
 
 #rename(starbucks_R_C_P, StoreNumber = `Store Number`)
@@ -85,14 +86,14 @@ starbucks_IL_IA_R_C_P <- starbucks_IL_IA %>%
 #starbucks_MO_R_C_P$`Ownership Type.f` <- #factor(starbucks_MO_R_C_P$`Ownership Type`)
 #is.factor(starbucks_MO_R_C_P$`Ownership Type.f`)
 
-starbucks_IL_IA_R_C_P
+starbucks_MO_R_C_P
 
 ```
 
 
 
 ```{r}
-ggplot(data = starbucks_IL_IA_R_C_P) +
+ggplot(data = starbucks_MO_R_C_P) +
   geom_bar(mapping = aes(x = `Ownership Type`))
 ```
 
@@ -107,7 +108,7 @@ ggplot(data = starbucks) +
 
 options(scipen=10000)
 
-ggplot(starbucks_IL_IA_R_C_P, aes(P)) + 
+ggplot(starbucks_MO_R_C_P, aes(P)) + 
   geom_histogram()
 
 ```
@@ -116,6 +117,6 @@ ggplot(starbucks_IL_IA_R_C_P, aes(P)) +
 
 options(scipen=10000)
 
-ggplot(starbucks_IL_IA_R_C_P, aes(x=C, y=`Ownership Type`)) + geom_point()
+ggplot(starbucks_MO_R_C_P, aes(x=C, y=`Ownership Type`)) + geom_point()
 
 ```

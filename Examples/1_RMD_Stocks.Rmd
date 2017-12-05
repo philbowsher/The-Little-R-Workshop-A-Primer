@@ -4,7 +4,7 @@ output:
   pdf_document: default
   word_document: default
 params:
-  symbol: DE
+  symbol: IBM
 ---
 
 ## `r params$symbol`

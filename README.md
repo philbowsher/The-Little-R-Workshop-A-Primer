@@ -1,8 +1,12 @@
 # The Little R Workshop: A Primer
 
-Presentation here:
+Full Presentation here:
 
 https://beta.rstudioconnect.com/content/3133/#1
+
+Quick Presentation here:
+
+https://beta.rstudioconnect.com/content/3280/
 
 PDF here:
 

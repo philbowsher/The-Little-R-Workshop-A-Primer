@@ -118,6 +118,7 @@ a {
 
 ## We'll Discuss:
 <div class="columns-2">
+- Importing Data
 - Data Step
 - Procs
 - ODS
@@ -234,6 +235,7 @@ a {
 - Objects
 - R Memory Usage
 - Hard Drive
+- https://community.rstudio.com/t/sas-vs-r-discussion-prep/2665/2
 
 ## Getting Started
 
@@ -282,6 +284,8 @@ storms <-tribble(
 "Arthur", 45, 1010, "1996-06-21"
 )
 
+# filter(storms, wind == 45)
+
 # data person;
 #   input name $ dept $;
 #   datalines;
@@ -290,7 +294,7 @@ storms <-tribble(
 # ;
 ```
 
-## Importing Data - tidyverse
+## Importing Data
 
 - Infile
 - feather - a fast, lightweight file format used by both R and Python
@@ -302,7 +306,7 @@ storms <-tribble(
 - dplyr - contains an interface to common databases
 - [data.table - fread() for fast table reading](https://rpubs.com/ggData/datatable)
 - XPT files can be read into R with the built-in read.xport
-- SASxport, rio
+- [SASxport](http://blog.revolutionanalytics.com/2017/06/r-fda.html), rio
 
 ## Preview - Importing Data
 <div class="columns-2">
@@ -351,8 +355,9 @@ storms <-tribble(
 
 ## Importing Relational Data
 - Relationships between data
-- tuples
+- Tuples
 - Drivers
+- Demo
 
 ## Distributed Sources
 - CSV goes to memory but... as data groww, intro Relational Model...
@@ -382,9 +387,10 @@ storms <-tribble(
 - [dplyr](https://rpubs.com/justmarkham/dplyr-tutorial)
 - [data.tables](https://rpubs.com/carbonmetrics/datatable)
 - Dates - lubridate
-- Set Statement
+- Set Statement <- & %>%
 - Subsetting
 - https://rpubs.com/hgil01/Modern-R-for-SAS-Users
+- https://www.computerworld.com/article/2921176/business-intelligence/great-r-packages-for-data-import-wrangling-visualization.html
 
 ## See Slides
 
@@ -820,7 +826,9 @@ Shiny Server is a server program that lets you host and manage shiny web applica
 - Graphics
   - Proc SGPlot
   - [GGPlot2](https://rpubs.com/hadley/ggplot2-toolbox)
-  
+- https://www.ssc.wisc.edu/~hemken/SASworkshops/Markdown/SASmarkdown.html
+- http://www.phusewiki.org/docs/2017_SDEs/NorthChicago/Presentations/StefanEnglert.pdf
+
 ## Notes on Reproducibility
 
 - https://www.nih.gov/research-training/rigor-reproducibility/principles-guidelines-reporting-preclinical-research

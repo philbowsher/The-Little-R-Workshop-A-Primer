@@ -5,8 +5,8 @@ account: philbowsher
 server: beta.rstudioconnect.com
 hostUrl: https://beta.rstudioconnect.com/__api__
 appId: 3133
-bundleId: 6721
+bundleId: 6864
 url: https://beta.rstudioconnect.com/content/3133/
-when: 1509594565.86914
+when: 1512446205.12132
 asMultiple: FALSE
 asStatic: FALSE
